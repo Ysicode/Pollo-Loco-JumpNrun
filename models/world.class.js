@@ -10,8 +10,8 @@ class World {
     ];
 
     backgrounds = [
-        new Background('img/5_background/layers/1_first_layer/1.png'),
-        new Background('img/5_background/layers/1_first_layer/2.png')
+        new Background('img/5_background/layers/1_first_layer/1.png', 0, 150),
+        new Background('img/5_background/layers/1_first_layer/2.png', 0, 180)
 
     ];
 
@@ -28,18 +28,15 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-       
         this.addToMap(this.character);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.background);
+        this.addObjectsToMap(this.backgrounds);
 
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
-
-
     }
 
     addObjectsToMap(objects) {
