@@ -10,28 +10,35 @@ class World {
     ];
 
     backgrounds = [
-        new Background('img/5_background/layers/1_first_layer/1.png', 0, 150),
-        new Background('img/5_background/layers/1_first_layer/2.png', 0, 180)
-
+        new Background('img/5_background/layers/air.png', 0, 0),
+        new Background('img/5_background/layers/3_third_layer/1.png', 0, 0),
+        new Background('img/5_background/layers/2_second_layer/1.png', 0, 0),
+        new Background('img/5_background/layers/1_first_layer/1.png', 0, 0)
     ];
 
     canvas;
     ctx;
-
-    constructor(canvas) {
+    keyboard;
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard
         this.draw();
+        this.setWorld();
+    }
 
+    setWorld() {
+        this.character.world = this;
     }
 
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.addToMap(this.character);
+
+        this.addObjectsToMap(this.backgrounds);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.backgrounds);
+        this.addToMap(this.character);
 
         let self = this;
         requestAnimationFrame(function () {
