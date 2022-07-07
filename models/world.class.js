@@ -14,7 +14,7 @@ class World {
         this.draw();
         this.setWorld();
         this.level.levelSound.play();
-        this.level.levelSound.volume = 0.0; //Muss 0.02 sein
+        this.level.levelSound.volume = 0.00; //Muss 0.02 sein
     }
 
     setWorld() {

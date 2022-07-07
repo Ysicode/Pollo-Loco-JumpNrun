@@ -46,7 +46,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-            this.moveleft();
+            this.moveLeft();
             this.walk();
     }
 
