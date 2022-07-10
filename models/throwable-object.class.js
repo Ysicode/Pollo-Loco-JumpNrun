@@ -17,12 +17,13 @@ IMAGES_THROW = [
     }
 
     throw() {
-        this.playAnimation(this.IMAGES_THROW);
-       
         this.speedY = 20;
         this.applyGravity();
         setInterval(() => {
             this.x += 10;
         }, 20);
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_THROW);
+        }, 50);
     }
 }

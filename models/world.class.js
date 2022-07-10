@@ -1,13 +1,15 @@
 class World {
     character = new Character();
     level = level1;
-
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     statusbar = new Statusbar();
+    bottleCounter = new Bottlecounter();
     throwableObjects = [];
+    bottles = new Bottles();
+    coin = new Coin();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -42,8 +44,14 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.reduceEnergy();
                 this.statusbar.setPercentage(this.character.energy);
-            }
+            }    
         });
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.coin.removeCoin();
+            }    
+        });
+       
     }
 
 
@@ -55,11 +63,14 @@ class World {
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0); //Backwards
         //Space for fixed objects
         this.addToMap(this.statusbar);
+        this.addToMap(this.bottleCounter);
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);

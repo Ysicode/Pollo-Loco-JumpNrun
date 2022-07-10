@@ -39,4 +39,9 @@ class DrawableObject {
             this.imageCache[path] = img;
         });
     }
+
+    removeCoin() {
+        let i = this.world.level.coins.indexOf(this);
+        this.world.level.coins.splice(i, 1);
+    };
 }

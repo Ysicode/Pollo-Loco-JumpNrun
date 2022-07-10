@@ -75,7 +75,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
-            if (this.world.keyboard.LEFT && this.x > -619 * 3) {
+            if (this.world.keyboard.LEFT && this.x > 100) {
                 this.moveLeft();
                 this.otherDirection = true;
                 this.walking_sound.play();
