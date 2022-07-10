@@ -69,4 +69,9 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
+    removeCoin() {
+        let i = this.world.level.coins.indexOf(this);
+        this.world.level.coins.splice(i, 1);
+    }
+
 }

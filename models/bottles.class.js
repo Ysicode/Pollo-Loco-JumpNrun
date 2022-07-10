@@ -1,4 +1,4 @@
-class Bottles extends DrawableObject {
+class Bottles extends MovableObject {
 
     constructor(imagePath, x, y) {
         super().loadImage(imagePath);

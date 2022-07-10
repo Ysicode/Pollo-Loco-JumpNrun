@@ -10,6 +10,7 @@ class World {
     throwableObjects = [];
     bottles = new Bottles();
     coin = new Coin();
+    select_sound = new Audio('audio/select.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -44,14 +45,28 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.reduceEnergy();
                 this.statusbar.setPercentage(this.character.energy);
-            }    
+            }
         });
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                this.coin.removeCoin();
-            }    
+                let i = this.level.coins.indexOf(coin);
+                this.level.coins.splice(i, 1);
+                this.select_sound.play();
+            }
         });
-       
+        this.level.bottles.forEach((bottles) => {
+            if (this.character.isColliding(bottles)) {
+                let i = this.level.bottles.indexOf(bottles);
+                this.level.bottles.splice(i, 1);
+                this.select_sound.play();
+            }
+        });
+        this.throwableObjects.forEach((object) => {
+            if (this.enemies.isColliding(object)) {
+                console.log('hitted');
+            }
+        });
+
     }
 
 
