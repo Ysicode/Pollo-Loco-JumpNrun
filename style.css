@@ -1,8 +1,23 @@
 body {
     display: flex;
     flex-direction: column;
+    margin: 0;;
     align-items: center;
+    justify-content: center;
 }
 canvas {
     background-color: black;
+    display: block;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }

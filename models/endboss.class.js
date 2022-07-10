@@ -33,30 +33,33 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G19.png',
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
-    speed = -1;
+    speed = 0.2;
     walking = false;
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
-        this.x = 719 * 3 - 600; 
-        this.speed = 0.2;
+        this.x = 719 * 3; 
         this.animate();
     }
 
     animate() {
-            this.moveLeft();
             this.walk();
+            setInterval(() => {
+                this.moveLeft();
+            }, 1000 / 60);
     }
 
     walk() {
+        this.y = 160;
+        this.speed = 0.2;
        let walking = setInterval(() => {
             let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6 => 0 Rest 6
             let path = this.IMAGES_WALKING[i];
             this.img = this.imageCache[path];
             this.currentImage++;
-            this.speed = 0.2;
+            
             if (i == this.IMAGES_WALKING.length - 1) {
                 clearInterval(walking);
                 this.currentImagen = 0;
@@ -66,7 +69,8 @@ class Endboss extends MovableObject {
     }
 
     attack() {
-        this.speed = 0;
+    this.speed = 0;
+    this.y = 0;
        let attacking = setInterval(() => {
             let i = this.currentImage % this.IMAGES_ATTACK.length;
             let path = this.IMAGES_ATTACK[i];
