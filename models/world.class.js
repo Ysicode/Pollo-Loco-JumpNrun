@@ -19,8 +19,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.level.levelSound.play();
-        this.level.levelSound.volume = 0.00; //Muss 0.02 sein
     }
 
     setWorld() {
@@ -41,12 +39,25 @@ class World {
     }
 
     checkCollisions() {
+        this.characterWithEnemy();
+        this.characterWithCoin();
+        this.characterWithBottles();
+        this.throwableObjects.forEach((object) => {
+            this.throwableObjectWithEnemies(object);
+        });
+
+    }
+
+    characterWithEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.reduceEnergy();
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    characterWithCoin() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 let i = this.level.coins.indexOf(coin);
@@ -54,6 +65,9 @@ class World {
                 this.select_sound.play();
             }
         });
+    }
+
+    characterWithBottles() {
         this.level.bottles.forEach((bottles) => {
             if (this.character.isColliding(bottles)) {
                 let i = this.level.bottles.indexOf(bottles);
@@ -61,14 +75,15 @@ class World {
                 this.select_sound.play();
             }
         });
-        this.throwableObjects.forEach((object) => {
-            if (this.enemies.isColliding(object)) {
-                console.log('hitted');
-            }
-        });
-
     }
 
+    throwableObjectWithEnemies(object) {
+        this.level.enemies.forEach((enemy) => {
+            if (object.isColliding(enemy)) {
+                console.log('hitted');
+            }
+        })
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //löscht alle Elemente

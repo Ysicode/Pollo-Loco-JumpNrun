@@ -39,7 +39,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
 
-
+    world;
     speed = 0.2;
     walking = false;
 
@@ -58,20 +58,20 @@ class Endboss extends MovableObject {
     }
 
     moveEndbossLeft() {
-        let left = setInterval(() => {
+        let moveleft = setInterval(() => {
             this.moveLeft();
             if (this.x < 6500) {
-                clearInterval(left);
+                clearInterval(moveleft);
                 this.moveEndbossRight();
             };
         }, 1000 / 60);
     }
 
     moveEndbossRight() {
-        let right = setInterval(() => {
+        let moveright = setInterval(() => {
             this.moveRight();
             if (this.x > 7000) {
-                clearInterval(right);
+                clearInterval(moveright);
                 this.moveEndbossLeft();
             };
         }, 1000 / 60);
@@ -82,13 +82,9 @@ class Endboss extends MovableObject {
         this.speed = 5;
         let walking = setInterval(() => {
             let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6 => 0 Rest 6
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-
-            if (i == this.IMAGES_WALKING.length - 1) {
-                clearInterval(walking);
-                this.currentImage = 0;
+            this.endbossAnimation(this.IMAGES_WALKING, i);
+            if (this.animationEnd(this.IMAGES_WALKING, i)) {
+                this.intervalEnd(walking)
                 this.attack();
             }
         }, 200);
@@ -99,14 +95,28 @@ class Endboss extends MovableObject {
         this.y = 0;
         let attacking = setInterval(() => {
             let i = this.currentImage % this.IMAGES_ATTACK.length;
-            let path = this.IMAGES_ATTACK[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-            if (i == this.IMAGES_ATTACK.length - 1) {
+            this.endbossAnimation(this.IMAGES_ATTACK, i);
+            if (this.animationEnd(this.IMAGES_ATTACK, i)) {
                 clearInterval(attacking);
                 this.currentImage = 0;
                 this.walk();
             }
         }, 200);
     }
+
+    animationEnd(images, i) {
+        return i == images.length - 1
+    }
+
+    intervalEnd(interval) {
+        clearInterval(interval);
+        this.currentImage = 0;
+    }
+
+    endbossAnimation(images, i) {
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    }
+
 }

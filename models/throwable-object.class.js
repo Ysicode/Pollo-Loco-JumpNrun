@@ -26,4 +26,5 @@ IMAGES_THROW = [
             this.playAnimation(this.IMAGES_THROW);
         }, 50);
     }
+
 }
