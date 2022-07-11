@@ -3,7 +3,6 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 0.8;
-    energy = 100;
     lastHit = 0;
 
 
@@ -42,14 +41,21 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height;
     }
 
+    jumpsOnTop(object) {
+        return this.y + this.height > object.y &&
+            this.y + this.height < object.y + object.height &&
+            this.x + this.width > object.x &&
+            this.x + this.width < (object.x + object.width + 70);
+    };
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //difference in millisecons
         timepassed = timepassed / 1000; //difference in seconds
-        return timepassed < 1;
+        return timepassed < 0.7;
     }
 
-    reduceEnergy() {
-        this.energy -= 5;
+    reduceEnergy(object) {
+        object.energy -= 5;
         this.lastHit = new Date().getTime();
     }
 

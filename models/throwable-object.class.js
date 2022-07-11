@@ -6,6 +6,8 @@ IMAGES_THROW = [
     'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
 ];
 
+throw_sound = new Audio('audio/throw.mp3');
+
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_THROW);
@@ -19,6 +21,7 @@ IMAGES_THROW = [
     throw() {
         this.speedY = 20;
         this.applyGravity();
+        this.throw_sound.play();
         setInterval(() => {
             this.x += 10;
         }, 20);

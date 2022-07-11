@@ -2,6 +2,9 @@ class Endboss extends MovableObject {
     y = 160;
     height = 300;
     width = 250;
+    energy = 200;
+    intervalAttack;
+    intervalWalk;
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -39,6 +42,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
 
+    IMAGES_DEAD = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+
     world;
     speed = 0.2;
     walking = false;
@@ -48,6 +57,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = x;
         this.animate();
     }
@@ -55,6 +65,26 @@ class Endboss extends MovableObject {
     animate() {
         this.walk();
         this.moveEndbossLeft();
+        this.checkIsHurt();
+        this.checkIsDead();
+    }
+
+    checkIsHurt() {
+        setInterval(() => {
+            if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+        }, 50);
+    }
+
+    checkIsDead() {
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                this.y += 15;
+                clearInterval(this.intervalAttack);
+            }
+        }, 50);
     }
 
     moveEndbossLeft() {
@@ -80,11 +110,11 @@ class Endboss extends MovableObject {
     walk() {
         this.y = 160;
         this.speed = 5;
-        let walking = setInterval(() => {
+        this.intervalWalk = setInterval(() => {
             let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6 => 0 Rest 6
             this.endbossAnimation(this.IMAGES_WALKING, i);
             if (this.animationEnd(this.IMAGES_WALKING, i)) {
-                this.intervalEnd(walking)
+                this.intervalEnd(this.intervalWalk)
                 this.attack();
             }
         }, 200);
@@ -93,11 +123,11 @@ class Endboss extends MovableObject {
     attack() {
         this.speed = 0;
         this.y = 0;
-        let attacking = setInterval(() => {
+        this.intervalAttack = setInterval(() => {
             let i = this.currentImage % this.IMAGES_ATTACK.length;
             this.endbossAnimation(this.IMAGES_ATTACK, i);
             if (this.animationEnd(this.IMAGES_ATTACK, i)) {
-                clearInterval(attacking);
+                clearInterval(this.intervalAttack);
                 this.currentImage = 0;
                 this.walk();
             }

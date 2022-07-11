@@ -2,6 +2,7 @@ class Character extends MovableObject {
     y = 80;
     height = 250;
     width = 120;
+    energy = 100;
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -136,7 +137,7 @@ class Character extends MovableObject {
             this.deadAnimation();
         }
     }
-    
+
     deadAnimation() {
         setInterval(() => {
             this.y += 10;
@@ -158,7 +159,6 @@ class Character extends MovableObject {
 
     characterWalking() {
         if (this.walking()) {
-            console.log(this.y);
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
@@ -173,6 +173,4 @@ class Character extends MovableObject {
         return this.world.keyboard.RIGHT && this.y > 185 || 
         this.world.keyboard.LEFT && this.y > 185
     }
-
-
 }

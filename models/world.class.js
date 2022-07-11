@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     level = level1;
+    endboss = level1.endboss;
     canvas;
     ctx;
     keyboard;
@@ -8,8 +9,8 @@ class World {
     statusbar = new Statusbar();
     bottleCounter = new Bottlecounter();
     throwableObjects = [];
-    bottles = new Bottles();
-    coin = new Coin();
+    
+  
     select_sound = new Audio('audio/select.mp3');
 
     constructor(canvas, keyboard) {
@@ -19,6 +20,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        console.log(this.endboss.x);
     }
 
     setWorld() {
@@ -31,6 +33,7 @@ class World {
             this.checkThrowObjects();
         }, 200)
     }
+
     checkThrowObjects() {
         if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -40,19 +43,39 @@ class World {
 
     checkCollisions() {
         this.characterWithEnemy();
+        this.characterWithEndboss();
         this.characterWithCoin();
         this.characterWithBottles();
+        this.characterJumpsOnEnemy();
         this.throwableObjects.forEach((object) => {
-            this.throwableObjectWithEnemies(object);
-        });
+            if (this.endboss.isColliding(object)) {
+                this.endboss.reduceEnergy(this.endboss);
+            }
+        }); 
+    }
 
+    characterWithEndboss() {
+        if (this.character.isColliding(this.endboss)) {
+            this.character.reduceEnergy(this.character);
+            this.statusbar.setPercentage(this.character.energy);
+        }
     }
 
     characterWithEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.reduceEnergy();
+            if (this.character.isColliding(enemy) && !this.character.jumpsOnTop(enemy)) {
+                this.character.reduceEnergy(this.character);
                 this.statusbar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    characterJumpsOnEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.jumpsOnTop(enemy) && this.character.speedY < 0) {
+                console.log( this.character.speedY);
+                let i = this.level.enemies.indexOf(enemy);
+                this.level.enemies[i].removeChicken();
             }
         });
     }
@@ -77,13 +100,7 @@ class World {
         });
     }
 
-    throwableObjectWithEnemies(object) {
-        this.level.enemies.forEach((enemy) => {
-            if (object.isColliding(enemy)) {
-                console.log('hitted');
-            }
-        })
-    }
+   
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //löscht alle Elemente
@@ -96,9 +113,11 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.endboss);
 
         this.ctx.translate(-this.camera_x, 0); //Backwards
         //Space for fixed objects
+        
         this.addToMap(this.statusbar);
         this.addToMap(this.bottleCounter);
         this.ctx.translate(this.camera_x, 0); //Forwards
