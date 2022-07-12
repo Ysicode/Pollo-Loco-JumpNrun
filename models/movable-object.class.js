@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 0.8;
     lastHit = 0;
-
+    lastJumpOnChicken = 0
 
     applyGravity() {
         setInterval(() => {
@@ -14,7 +14,6 @@ class MovableObject extends DrawableObject {
             }
         }, 1000 / 60);
     }
-
 
     isAboveGround() {
         if (this instanceof ThrowableObject) { //wenn die Funcktion von throwable object ausgefüghrt wird => true und somit wird y die ganze zeit verringert
@@ -26,26 +25,24 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY += 35;
-        this.jumping_sound.volume = 0.2;
-        this.jumping_sound.play();
     }
 
     isDead() {
-        return this.energy < 0;
+        return this.energy == 0;
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x + mo.width &&
-            this.y < mo.y + mo.height;
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
     jumpsOnTop(object) {
-        return this.y + this.height > object.y &&
-            this.y + this.height < object.y + object.height &&
-            this.x + this.width > object.x &&
-            this.x + this.width < (object.x + object.width + 70);
+        return this.y + this.height - this.offset.bottom > object.y - 20 &&
+            this.y + this.height < object.y + 20 &&
+            this.x + this.width > object.x - 40 &&
+            this.x + this.width < (object.x + object.width + 40);
     };
 
     isHurt() {
@@ -54,11 +51,12 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.7;
     }
 
-    reduceEnergy(object) {
-        object.energy -= 5;
-        this.lastHit = new Date().getTime();
+    reduceEnergy(object, damage) {
+        if (!object.energy == 0) {
+            object.energy -= damage;
+            this.lastHit = new Date().getTime();
+        } 
     }
-
 
     playAnimation(images) {
         let i = this.currentImage % images.length;

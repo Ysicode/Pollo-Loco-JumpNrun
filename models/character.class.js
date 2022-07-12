@@ -3,6 +3,12 @@ class Character extends MovableObject {
     height = 250;
     width = 120;
     energy = 100;
+    offset = {
+        top: 100,
+        bottom: 15,
+        left: 20,
+        right: 20
+    }
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -76,6 +82,7 @@ class Character extends MovableObject {
     jumping_sound = new Audio('audio/jump.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
     dead_sound = new Audio('audio/dead.mp3');
+    jumpingOnChicken_sound = new Audio('audio/wohoo.mp3')
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -127,7 +134,17 @@ class Character extends MovableObject {
     jumping() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
+            this.jumping_sound.volume = 0.8;
+            this.jumping_sound.play();
         }
+    }
+
+    jumpingOnChicken() {
+        this.y = 80;
+        this.speedY = 10;
+        this.jumpingOnChicken_sound.volume = 0.5
+        this.jumpingOnChicken_sound.play();
+        this.isPlaying = false;
     }
 
     characterDead(interval) {
@@ -135,6 +152,7 @@ class Character extends MovableObject {
             this.y = 0;
             clearInterval(interval);
             this.deadAnimation();
+            document.getElementById('end_screen').classList.remove('d_none');
         }
     }
 
@@ -142,7 +160,7 @@ class Character extends MovableObject {
         setInterval(() => {
             this.y += 10;
             this.dead_sound.play();
-            if (this.y > 500) {
+            if (this.y > 1000) {
                 window.location.reload();
             }
             this.playAnimation(this.IMAGES_DEAD);
@@ -170,7 +188,7 @@ class Character extends MovableObject {
     }
 
     walking() {
-        return this.world.keyboard.RIGHT && this.y > 185 || 
-        this.world.keyboard.LEFT && this.y > 185
+        return this.world.keyboard.RIGHT && this.y > 185 ||
+            this.world.keyboard.LEFT && this.y > 185
     }
 }

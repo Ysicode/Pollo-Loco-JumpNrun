@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pollo Loco</title>
-    <link rel="icon" type="image/x-icon" href="img/8_coin/coin_2.png" sizes="32x32">
+    <link rel="icon" type="image/x-icon" href="icons/android-chrome-512x512.png" sizes="32x32">
 
     <link rel="stylesheet" href="style.css">
 
@@ -18,25 +18,39 @@
     <script src="models/bottles.class.js"></script>
     <script src="models/coin.class.js"></script>
     <script src="models/bottle-counter.class.js"></script>
+    <script src="models/coin-counter.class.js"></script>
     <script src="models/character.class.js"></script>
-    <script src="models/chicken.class.js"></script> 
-    <script src="models/endboss.class.js"></script>  
+    <script src="models/chicken.class.js"></script>
+    <script src="models/endboss.class.js"></script>
     <script src="models/background.class.js"></script>
-    <script src="models/keyboard.class.js"></script>    
+    <script src="models/keyboard.class.js"></script>
     <script src="models/level.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="models/world.class.js"></script>
 
 
-
     <script src="JS/game.js"></script>
 
 </head>
 
-<body">
-    <canvas id="canvas" width="720px" height="480px"></canvas>
-    <button onclick="init()" >Start Game</button>
+<body onload="init()">
+    <div class="game_container">
+        <canvas id="canvas" width="720px" height="480px"></canvas>
+        <img id="start_screen" class="start_screen" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+        <button onclick="startGame()" id="start_game" class="start_game_btn">Start Game</button>
+        <img id="end_screen" class="end_screen d_none" onclick="startGame()"
+            src="img/9_intro_outro_screens/game_over/game over.png" alt="">
+        <div id="navbar_container" class="navbar_container">
+            <div class="navbar">
+                <button id="controls" class="controls_button">Controls</button>
+                <div onclick="body.requestFullscreen() " id="fullscreen" class="fullscreen d_flex">
+                    <img class="icon_fullscreen" src="icons/fullscreen.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 

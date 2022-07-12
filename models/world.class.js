@@ -9,8 +9,8 @@ class World {
     statusbar = new Statusbar();
     bottleCounter = new Bottlecounter();
     throwableObjects = [];
-    
-  
+    coinCounter = new Coincounter();
+    endboss_sound = new Audio('audio/chciken.mp3');
     select_sound = new Audio('audio/select.mp3');
 
     constructor(canvas, keyboard) {
@@ -20,7 +20,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        console.log(this.endboss.x);
     }
 
     setWorld() {
@@ -29,29 +28,37 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();
             this.checkThrowObjects();
-        }, 200)
+            this.checkCollisionsWithEnemies();
+        }, 200);
+        setInterval(() => {
+            this.checkCollectOrJumpOnObjects();
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
         if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+            if (this.bottleCounter.bottleCounter > 0) {
+                this.bottleCounter.bottleCounter--;
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+            }
         }
     }
 
-    checkCollisions() {
+    checkCollisionsWithEnemies() {
         this.characterWithEnemy();
         this.characterWithEndboss();
-        this.characterWithCoin();
-        this.characterWithBottles();
-        this.characterJumpsOnEnemy();
-        this.throwableObjects.forEach((object) => {
-            if (this.endboss.isColliding(object)) {
-                this.endboss.reduceEnergy(this.endboss);
+        this.throwableObjectWithEndboss();
+    }
+
+    characterWithEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && enemy.alive && !this.character.jumpsOnTop(enemy)) {
+                this.character.reduceEnergy(this.character, 10);
+                this.statusbar.setPercentage(this.character.energy);
             }
-        }); 
+        });
     }
 
     characterWithEndboss() {
@@ -61,23 +68,31 @@ class World {
         }
     }
 
-    characterWithEnemy() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.jumpsOnTop(enemy)) {
-                this.character.reduceEnergy(this.character);
-                this.statusbar.setPercentage(this.character.energy);
+    throwableObjectWithEndboss() {
+        this.throwableObjects.forEach((object) => {
+            if (this.endboss.isColliding(object)) {
+                this.endboss.reduceEnergy(this.endboss, 5);
+                this.endboss_sound.volume = 0.5;
+                this.endboss_sound.play();
             }
         });
     }
 
-    characterJumpsOnEnemy() {
+    checkCollectOrJumpOnObjects() {
+        this.characterWithCoin();
+        this.characterJumpsOnTopChicken();
+        this.characterWithBottles();
+    }
+
+    characterJumpsOnTopChicken() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.jumpsOnTop(enemy) && this.character.speedY < 0) {
-                console.log( this.character.speedY);
+                enemy.alive = false;
                 let i = this.level.enemies.indexOf(enemy);
                 this.level.enemies[i].removeChicken();
+                this.character.jumpingOnChicken();
             }
-        });
+        })
     }
 
     characterWithCoin() {
@@ -86,6 +101,7 @@ class World {
                 let i = this.level.coins.indexOf(coin);
                 this.level.coins.splice(i, 1);
                 this.select_sound.play();
+                this.coinCounter.coinCounter++;
             }
         });
     }
@@ -96,11 +112,12 @@ class World {
                 let i = this.level.bottles.indexOf(bottles);
                 this.level.bottles.splice(i, 1);
                 this.select_sound.play();
+                this.bottleCounter.bottleCounter++;
             }
         });
     }
 
-   
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //löscht alle Elemente
@@ -117,9 +134,12 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0); //Backwards
         //Space for fixed objects
-        
+
         this.addToMap(this.statusbar);
+        this.drawNumber();
+        this.showEndbossNumber();
         this.addToMap(this.bottleCounter);
+        this.addToMap(this.coinCounter);
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);
@@ -144,9 +164,6 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-
-
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -163,5 +180,20 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    drawNumber() {
+        this.ctx.font = '30px sans-serif';
+        this.ctx.fillStyle = "black";
+        this.ctx.fillText(this.bottleCounter.bottleCounter, 55, 110);
+        this.ctx.fillText(this.coinCounter.coinCounter, 660, 50);
+    }
+
+    showEndbossNumber() {
+        if (this.character.x > 6000) {
+            this.ctx.font = '600 55px sans-serif';
+            this.ctx.fillStyle = "#e1c51c";
+            this.ctx.fillText(this.endboss.energy + '%', 450, 60);
+        }
     }
 }
