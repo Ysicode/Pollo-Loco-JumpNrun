@@ -6,6 +6,7 @@ body {
     justify-content: center;
     height: 100vh;
     backdrop-filter: blur(3px);
+    font-family: 'Archivo Black', sans-serif;
 }
 
 .d_none {
@@ -16,6 +17,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.d_flex_column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .game_container {
@@ -49,11 +57,64 @@ body {
     width: 120px;
     height: 45px;
     font-size: 20px;
-    font-weight: 600;
     border: none;
     background: #ffc408;
     border-radius: 25px;
     cursor: pointer;
+    z-index: 999;
+    font-family: 'Archivo Black', sans-serif;
+}
+
+.menu_controls {
+    position: absolute;
+    width: 720px;
+    height: 328px;
+    background: #32281af2;
+    transform: skewY(-11deg);
+    z-index: 990;
+}
+
+.menu_controls_icons {
+    background: #ffc408;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+.menu_icon_size {
+    width: 25px;
+    height: 25px;
+}
+
+.menu_icon_throw {
+    transform: rotate(286deg);
+}
+
+.menu_icon_up {
+    transform: rotate(0deg);
+}
+
+.menu_icon_left {
+    transform: rotate(270deg);
+}
+
+.menu_icon_right {
+    transform: rotate(90deg);
+}
+
+.icon_headline {
+    font-size: 33px;
+    color: #ffc408;
+    margin-bottom: 10px;
+}
+
+.container_controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
 }
 
 .fullscreen {
@@ -88,7 +149,7 @@ canvas {
     position: absolute;
     height: 75px;
     width: 250px;
-    font-size: 37px;
+    font-size: 30px;
     color: #000000;
     background: #ffc408;
     border-radius: 50px;
@@ -96,11 +157,15 @@ canvas {
     border: none;
     cursor: pointer;
     transition: all 100ms ease-in-out;
-    z-index: 990;
+    z-index: 900;
+    font-family: 'Archivo Black', sans-serif;
 }
 
-.start_game_btn:hover {
-    transform: scale(1.1);
+.start_game_btn_bigger {
+    transform: scale(1.05);
+}
+
+.start_game_btn:hover, .start_game_btn_bigger:hover {
     background: #fbd350;
 }
 
@@ -117,13 +182,75 @@ canvas {
 
 
 @media only screen and (max-width: 720px) {
-    canvas {
+    canvas, .game_container, .start_screen, .navbar_container, .menu_controls {
         width: 100%;
+    }
+
+    .menu_controls {
+        transform: skewY(0deg);
+    }
+
+    .navbar_container {
+        z-index: 999;
+    }
+
+    .start_game_btn {
+        height: 55px;
+        width: 200px;
+        font-size: 25px;
+    }
+
+    .controls_button {
+        width: 100px;
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .fullscreen {
+        width: 35px;
+        height: 35px;
+        transform: scale(0);
+    }
+
+    .icon_fullscreen {
+        width: 20px;
+        height: 20px;
     }
 }
 
 @media only screen and (max-height: 480px) {
-    canvas {
+    canvas, .game_container, .start_screen, .navbar_container, .menu_controls {
         height: 100vh;
+    }
+
+    .menu_controls {
+        transform: skewY(0deg);
+    }
+
+    .navbar_container {
+        z-index: 999;
+    }
+
+    .start_game_btn {
+        height: 55px;
+        width: 200px;
+        font-size: 25px;
+    }
+
+    .controls_button {
+        width: 100px;
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .fullscreen {
+        width: 35px;
+        height: 35px;
+        transform: scale(0);
+    }
+
+    .icon_fullscreen {
+        width: 20px;
+        height: 20px;
     }
 }

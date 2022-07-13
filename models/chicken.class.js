@@ -10,9 +10,9 @@ class Chicken extends MovableObject {
     width = 40;
     img;
     world;
-    walking;
+    intervalWalking;
     alive = true;
-    movingLeft;
+    intervalMovingLeft;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -36,20 +36,23 @@ class Chicken extends MovableObject {
     removeChicken() {
         this.y = 270;
         setInterval(() => {
-            this.playAnimation(this.IMAGES_DEAD);
-            this.y += 25;
+           this.deadAnimation();
         }, 50);
         clearInterval(this.walking);
         clearInterval(this.movingLeft);
-
     }
 
     animate() {
-        this.movingLeft = setInterval(() => {
+        this.intervalMovingLeft = setInterval(() => {
             this.moveLeft();
         }, 1000 / 60);
-        this.walking = setInterval(() => {
+        this.intervalWalking = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         }, 400);
+    }
+
+    deadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.y += 25;
     }
 }

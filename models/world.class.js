@@ -3,6 +3,7 @@ class World {
     level = level1;
     endboss = level1.endboss;
     canvas;
+    levelSoundInterval;
     ctx;
     keyboard;
     camera_x = 0;
@@ -20,10 +21,21 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.playLevelSound();
+    }
+
+    playLevelSound() {
+        this.level.levelSound.volume = 0.2;
+        this.level.levelSound.play();
+        this.levelSoundInterval = setInterval(() => {
+            this.level.levelSound.volume = 0.2;
+            this.level.levelSound.play();  
+        }, 20000);
     }
 
     setWorld() {
         this.character.world = this;
+        this.endboss.world = this;
     }
 
     run() {

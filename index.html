@@ -6,8 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pollo Loco</title>
-    <link rel="icon" type="image/x-icon" href="icons/android-chrome-512x512.png" sizes="32x32">
+    <link rel="icon" type="icon" href="icons/android-chrome-512x512.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 
     <script src="models/drawable-object.class.js"></script>
@@ -35,7 +39,7 @@
 </head>
 
 <body onload="init()">
-    <div class="game_container">
+    <div id="game_container" class="game_container">
         <canvas id="canvas" width="720px" height="480px"></canvas>
         <img id="start_screen" class="start_screen" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
         <button onclick="startGame()" id="start_game" class="start_game_btn">Start Game</button>
@@ -43,13 +47,48 @@
             src="img/9_intro_outro_screens/game_over/game over.png" alt="">
         <div id="navbar_container" class="navbar_container">
             <div class="navbar">
-                <button id="controls" class="controls_button">Controls</button>
-                <div onclick="body.requestFullscreen() " id="fullscreen" class="fullscreen d_flex">
+                <button onclick="toggleControls()" id="controls" class="controls_button">Controls</button>
+                <div onclick="fullscreen()" id="fullscreen" class="fullscreen d_flex">
                     <img class="icon_fullscreen" src="icons/fullscreen.png" alt="">
                 </div>
             </div>
         </div>
-    </div>
+        <div id="menu_controls" class="menu_controls d_flex d_none">
+            <div class="container_controls">
+                <div class="d_flex">
+                    <div class="d_flex_column">
+                        <p class="icon_headline">D</p>
+                        <div class="menu_controls_icons d_flex">
+                            <img class="menu_icon_throw menu_icon_size" src="icons/throw.png" alt="">
+                        </div>
+                    </div>
+
+                    <div class="d_flex_column">
+                        <p class="icon_headline">SPACE</p>
+                        <div class="menu_controls_icons d_flex">
+                            <img class="menu_icon_up menu_icon_size" src="icons/arrow.png" alt="">
+                        </div>
+                    </div>
+
+                    <div class="d_flex_column">
+                        <p class="icon_headline">LEFT</p>
+                        <div class="menu_controls_icons d_flex">
+                            <img class="menu_icon_left menu_icon_size" src="icons/arrow.png" alt="">
+                        </div>
+                    </div>
+
+                    <div class="d_flex_column">
+                        <p class="icon_headline">RIGHT</p>
+                        <div class="menu_controls_icons d_flex">
+                            <img class="menu_icon_right menu_icon_size" src="icons/arrow.png" alt="">
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
 
 
 </body>

@@ -76,6 +76,13 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
+
+    IMAGES_WINNER = [
+        'img/2_character_pepe/3_jump/J-34.png',
+        'img/2_character_pepe/3_jump/J-34.png'
+    ];
+
+
     world;
     speed = 10;
     walking_sound = new Audio('audio/running.mp3');
@@ -90,6 +97,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_WINNER);
         this.applyGravity();
         this.animate();
     }
@@ -150,6 +158,7 @@ class Character extends MovableObject {
     characterDead(interval) {
         if (this.isDead()) {
             this.y = 0;
+            this.world.level.levelSound.pause();
             clearInterval(interval);
             this.deadAnimation();
             document.getElementById('end_screen').classList.remove('d_none');
@@ -165,6 +174,16 @@ class Character extends MovableObject {
             }
             this.playAnimation(this.IMAGES_DEAD);
         }, 50)
+    }
+
+    winnerAnimation() {
+        this.playAnimation(this.IMAGES_WINNER);
+        if (this.y > -70) {
+            this.y -= 1.5;
+        }
+        if (this.y < 0) {
+            this.y += 1.5;
+        }
     }
 
     characterHurt() {

@@ -11,6 +11,7 @@ class Endboss extends MovableObject {
     energy = 100;
     intervalAttack;
     intervalWalk;
+    levelEnd_sound = new Audio('audio/end.mp3');
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -84,11 +85,22 @@ class Endboss extends MovableObject {
     }
 
     checkIsDead() {
-        setInterval(() => {
+        let intervalDead = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.world.character.winnerAnimation();
                 this.y += 15;
+                this.levelEnd_sound.play();
+                this.world.level.levelSound.pause();
                 clearInterval(this.intervalAttack);
+                clearInterval(this.world.levelSoundInterval);
+                this.world.level.enemies.forEach((enemy) => {
+                    enemy.deadAnimation();
+                });           
+                setTimeout(() => {
+                    clearInterval(intervalDead);
+                    window.location.reload();
+                }, 7000);
             }
         }, 50);
     }
