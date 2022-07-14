@@ -12,7 +12,6 @@ class Endboss extends MovableObject {
     intervalAttack;
     intervalWalk;
     intervalDead;
-    levelEnd_sound = new Audio('audio/end.mp3');
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -162,8 +161,8 @@ class Endboss extends MovableObject {
 
     levelEndAnimation() {
         this.world.character.winnerAnimation();
-        this.levelEnd_sound.play();
-        this.world.level.levelSound.pause();
+        this.world.levelEndMusic.volume = 0.3;
+        this.world.levelEndMusic.play();
         this.world.level.enemies.forEach((enemy) => {
             enemy.deadAnimation();
         });

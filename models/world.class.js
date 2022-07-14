@@ -2,6 +2,12 @@ class World {
     character = new Character();
     level = level1;
     endboss = level1.endboss;
+    enemies = level1.enemies;
+    levelMusic = level1.levelSounds[0];
+    endbossMusic = level1.levelSounds[1];
+    levelEndMusic = level1.levelSounds[2];
+    endbossSound = level1.levelSounds[3];
+    selectSound = level1.levelSounds[4];
     canvas;
     levelSoundInterval;
     ctx;
@@ -11,8 +17,6 @@ class World {
     bottleCounter = new Bottlecounter();
     throwableObjects = [];
     coinCounter = new Coincounter();
-    endboss_sound = new Audio('audio/chciken.mp3');
-    select_sound = new Audio('audio/select.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -24,12 +28,15 @@ class World {
         this.playLevelSound();
     }
 
+    playSound(sound, volume) {
+        sound.play();
+        sound.volume = volume;
+    }
+
     playLevelSound() {
-        this.level.levelSound.volume = 0.2;
-        this.level.levelSound.play();
+        this.playSound(this.levelMusic, 0.2);
         this.levelSoundInterval = setInterval(() => {
-            this.level.levelSound.volume = 0.2;
-            this.level.levelSound.play();
+            this.playSound(this.levelMusic, 0.2);
         }, 20000);
     }
 
@@ -45,26 +52,43 @@ class World {
         }, 200);
         setInterval(() => {
             this.checkCollectOrJumpOnObjects();
+            this.checkEndbossFightStarts();
         }, 1000 / 60);
+    }
+
+    checkEndbossFightStarts() {
+        if (this.character.startFightingEndboss()) {
+            this.level.levelStartX = 6000;
+            this.showEndbossEnergy();
+            this.levelMusic.pause();
+            clearInterval(this.levelSoundInterval);
+            this.playSound(this.endbossMusic, 0.1);
+            if (this.endboss.isDead()) {
+                this.endbossMusic.pause();
+            }
+        }
     }
 
     checkThrowObjects() {
         if (this.keyboard.D) {
             if (this.bottleCounter.bottleAvailable()) {
-                this.checkThrowDirection();  
-                this.bottleCounter.bottleCounter--;        
+                this.checkThrowDirection();
+                this.bottleCounter.bottleCounter--;
             }
         }
     }
 
     checkThrowDirection() {
         if (this.character.otherDirection) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 'throwLeft');
-            this.throwableObjects.push(bottle);
+            this.throwDirection('throwLeft');
         } else {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 'throwRight');
-            this.throwableObjects.push(bottle);
+            this.throwDirection('throwRight');
         }
+    }
+
+    throwDirection(direction) {
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, direction);
+        this.throwableObjects.push(bottle);
     }
 
     checkCollisionsWithEnemies() {
@@ -93,8 +117,7 @@ class World {
         this.throwableObjects.forEach((object) => {
             if (this.endboss.isColliding(object)) {
                 this.endboss.reduceEnergy(this.endboss, 5);
-                this.endboss_sound.volume = 0.5;
-                this.endboss_sound.play();
+                this.playSound(this.endbossSound, 0.5);
             }
         });
     }
@@ -121,7 +144,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 let i = this.level.coins.indexOf(coin);
                 this.level.coins.splice(i, 1);
-                this.select_sound.play();
+                this.selectSound.play();
                 this.coinCounter.coinCounter++;
             }
         });
@@ -132,18 +155,33 @@ class World {
             if (this.character.isColliding(bottles)) {
                 let i = this.level.bottles.indexOf(bottles);
                 this.level.bottles.splice(i, 1);
-                this.select_sound.play();
+                this.playSound(this.selectSound, 1);
                 this.bottleCounter.bottleCounter++;
             }
         });
     }
 
-
-
     draw() {
+        this.clearCanvas();
+        this.drawLevel();
+        this.drawFixedObjects();
+        this.drawCharacter();
+        this.drawAnimation();
+    }
+
+    drawAnimation() {
+        //Draw() wird immer wieder aufgerufen
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
+
+    clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //löscht alle Elemente
+    }
 
-
+    drawLevel() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
@@ -152,26 +190,21 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.endboss);
+        this.ctx.translate(-this.camera_x, 0);
+    }
 
-        this.ctx.translate(-this.camera_x, 0); //Backwards
-        //Space for fixed objects
-
+    drawFixedObjects() {
         this.addToMap(this.statusbar);
         this.drawNumber();
-        this.showEndbossNumber();
+        this.showEndbossEnergy();
         this.addToMap(this.bottleCounter);
         this.addToMap(this.coinCounter);
+    }
+
+    drawCharacter() {
         this.ctx.translate(this.camera_x, 0); //Forwards
-
         this.addToMap(this.character);
-
         this.ctx.translate(-this.camera_x, 0);
-
-        //Draw() wird immer wieder aufgerufen
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
     }
 
     addObjectsToMap(objects) {
@@ -210,11 +243,12 @@ class World {
         this.ctx.fillText(this.coinCounter.coinCounter, 660, 50);
     }
 
-    showEndbossNumber() {
-        if (this.character.x > 6000) {
+    showEndbossEnergy() {
+        if (this.character.startFightingEndboss()) {
             this.ctx.font = '600 55px sans-serif';
             this.ctx.fillStyle = "#e1c51c";
             this.ctx.fillText(this.endboss.energy + '%', 450, 60);
         }
     }
+
 }

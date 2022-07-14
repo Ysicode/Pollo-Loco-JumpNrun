@@ -4,31 +4,26 @@ class Level {
     backgrounds;
     bottles;
     coins;
-    levelSound;
+    levelSounds;
     levelEndX = 719 * 10;
+    levelStartX = 100
     endboss;
 
-    constructor(levelSound, enemies, endboss, clouds, backgrounds, bottles, coins) {
+    constructor(levelSounds, enemies, endboss, clouds, backgrounds, bottles, coins) {
         this.enemies = enemies;
         this.clouds = clouds;
         this.backgrounds = backgrounds;
         this.bottles = bottles;
-        this.levelSound = levelSound;
+        this.levelSounds = levelSounds;
         this.coins = coins;
         this.endboss = endboss;
     }
 
     playLevelSound() {
-        this.levelSound.play();
+        this.levelSounds[0].play();
        setInterval(() => {
-       this.levelSound.play();
+       this.levelSounds[0].play();
        }, 25000);
     }
-
-    Sound() {
-        this.level.levelSound.play();
-        this.level.levelSound.volume = 0.02;
-    }
-
     
 }

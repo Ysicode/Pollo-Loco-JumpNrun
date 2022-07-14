@@ -1,6 +1,12 @@
 
 const level1 = new Level(
-    new Audio('audio/music.mp3'),
+    [
+        new Audio('audio/music.mp3'),
+        new Audio('audio/endboss.mp3'),
+        new Audio('audio/end.mp3'),
+        new Audio('audio/chciken.mp3'),
+        new Audio('audio/select.mp3')
+    ],
     [
         new Chicken(800 + Math.random() * 500), //enemies
         new Chicken(800 + Math.random() * 500),

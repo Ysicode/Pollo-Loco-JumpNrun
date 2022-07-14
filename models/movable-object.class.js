@@ -42,7 +42,7 @@ class MovableObject extends DrawableObject {
         return this.y + this.height - this.offset.bottom > object.y - 20 &&
             this.y + this.height < object.y + 20 &&
             this.x + this.width > object.x - 40 &&
-            this.x + this.width < (object.x + object.width + 40);
+            this.x + this.width < (object.x + object.width + 70);
     };
 
     isHurt() {
@@ -71,6 +71,10 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         this.x -= this.speed;
+    }
+
+    startFightingEndboss() {
+        return this.x > 6000
     }
 
 }

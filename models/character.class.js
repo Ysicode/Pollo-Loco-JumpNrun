@@ -115,7 +115,6 @@ class Character extends MovableObject {
     }
 
     characterMove() {
-        this.walking_sound.volume = 0.8;
         this.walking_sound.pause();
         this.walkRight();
         this.walkLeft();
@@ -127,38 +126,36 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
             this.moveRight();
             this.otherDirection = false;
-            this.walking_sound.play();
+            this.world.playSound(this.walking_sound, 1)
         }
     }
 
     walkLeft() {
-        if (this.world.keyboard.LEFT && this.x > 100) {
+        if (this.world.keyboard.LEFT && this.x > this.world.level.levelStartX) {
             this.moveLeft();
             this.otherDirection = true;
-            this.walking_sound.play();
+            this.world.playSound(this.walking_sound, 1)
         }
     }
 
     jumping() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
-            this.jumping_sound.volume = 0.8;
-            this.jumping_sound.play();
+            this.world.playSound(this.jumping_sound, 1)
         }
     }
 
     jumpingOnChicken() {
         this.y = 80;
         this.speedY = 10;
-        this.jumpingOnChicken_sound.volume = 0.5
-        this.jumpingOnChicken_sound.play();
+        this.world.playSound(this.jumpingOnChicken_sound, 0.5)
         this.isPlaying = false;
     }
 
     characterDead(interval) {
         if (this.isDead()) {
             this.y = 0;
-            this.world.level.levelSound.pause();
+            this.world.levelMusic.pause();
             clearInterval(interval);
             this.deadAnimation();
             showElement('end_screen');
@@ -168,7 +165,7 @@ class Character extends MovableObject {
     deadAnimation() {
         setInterval(() => {
             this.y += 10;
-            this.dead_sound.play();
+            this.world.playSound(this.dead_sound, 1)
            setTimeout(() => {
             window.location.reload();
            }, 3000);    
@@ -189,8 +186,7 @@ class Character extends MovableObject {
     characterHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
-            this.hurt_sound.volume = 0.1;
-            this.hurt_sound.play();
+            this.world.playSound(this.hurt_sound, 0.2)
         }
     }
 
@@ -210,4 +206,5 @@ class Character extends MovableObject {
         return this.world.keyboard.RIGHT && this.y > 185 ||
             this.world.keyboard.LEFT && this.y > 185
     }
+
 }
