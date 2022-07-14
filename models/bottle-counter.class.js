@@ -9,4 +9,8 @@ class Bottlecounter extends DrawableObject {
         this.width = 50;
         this.height = 50;
     }
+
+    bottleAvailable() {
+        return this.bottleCounter > 0
+    }
 }

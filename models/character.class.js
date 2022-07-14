@@ -161,7 +161,7 @@ class Character extends MovableObject {
             this.world.level.levelSound.pause();
             clearInterval(interval);
             this.deadAnimation();
-            document.getElementById('end_screen').classList.remove('d_none');
+            showElement('end_screen');
         }
     }
 
@@ -169,9 +169,9 @@ class Character extends MovableObject {
         setInterval(() => {
             this.y += 10;
             this.dead_sound.play();
-            if (this.y > 1000) {
-                window.location.reload();
-            }
+           setTimeout(() => {
+            window.location.reload();
+           }, 3000);    
             this.playAnimation(this.IMAGES_DEAD);
         }, 50)
     }

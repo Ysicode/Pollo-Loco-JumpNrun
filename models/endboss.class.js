@@ -11,6 +11,7 @@ class Endboss extends MovableObject {
     energy = 100;
     intervalAttack;
     intervalWalk;
+    intervalDead;
     levelEnd_sound = new Audio('audio/end.mp3');
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -84,27 +85,6 @@ class Endboss extends MovableObject {
         }, 50);
     }
 
-    checkIsDead() {
-        let intervalDead = setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.world.character.winnerAnimation();
-                this.y += 15;
-                this.levelEnd_sound.play();
-                this.world.level.levelSound.pause();
-                clearInterval(this.intervalAttack);
-                clearInterval(this.world.levelSoundInterval);
-                this.world.level.enemies.forEach((enemy) => {
-                    enemy.deadAnimation();
-                });           
-                setTimeout(() => {
-                    clearInterval(intervalDead);
-                    window.location.reload();
-                }, 7000);
-            }
-        }, 50);
-    }
-
     moveEndbossLeft() {
         let moveleft = setInterval(() => {
             this.moveLeft();
@@ -165,6 +145,35 @@ class Endboss extends MovableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    checkIsDead() {
+        this.intervalDead = setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                this.y += 15;
+                clearInterval(this.intervalAttack);
+                clearInterval(this.world.levelSoundInterval);
+                this.levelEndAnimation();
+                this.restartGame();
+            }
+        }, 50);
+    }
+
+    levelEndAnimation() {
+        this.world.character.winnerAnimation();
+        this.levelEnd_sound.play();
+        this.world.level.levelSound.pause();
+        this.world.level.enemies.forEach((enemy) => {
+            enemy.deadAnimation();
+        });
+    }
+
+    restartGame() {
+        setTimeout(() => {
+            clearInterval(this.intervalDead);
+            window.location.reload();
+        }, 7000);
     }
 
 }

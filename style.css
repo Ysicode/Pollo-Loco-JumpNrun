@@ -159,6 +159,7 @@ canvas {
     transition: all 100ms ease-in-out;
     z-index: 900;
     font-family: 'Archivo Black', sans-serif;
+    transition: all 1200ms ease-in-out;
 }
 
 .start_game_btn_bigger {

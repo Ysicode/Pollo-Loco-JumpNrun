@@ -29,7 +29,7 @@ class World {
         this.level.levelSound.play();
         this.levelSoundInterval = setInterval(() => {
             this.level.levelSound.volume = 0.2;
-            this.level.levelSound.play();  
+            this.level.levelSound.play();
         }, 20000);
     }
 
@@ -50,11 +50,20 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D) {
-            if (this.bottleCounter.bottleCounter > 0) {
-                this.bottleCounter.bottleCounter--;
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                this.throwableObjects.push(bottle);
+            if (this.bottleCounter.bottleAvailable()) {
+                this.checkThrowDirection();  
+                this.bottleCounter.bottleCounter--;        
             }
+        }
+    }
+
+    checkThrowDirection() {
+        if (this.character.otherDirection) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 'throwLeft');
+            this.throwableObjects.push(bottle);
+        } else {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 'throwRight');
+            this.throwableObjects.push(bottle);
         }
     }
 
