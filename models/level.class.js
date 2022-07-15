@@ -5,7 +5,7 @@ class Level {
     bottles;
     coins;
     levelSounds;
-    levelEndX = 719 * 10;
+    levelEndX = 720 * 10;
     levelStartX = 100
     endboss;
 
@@ -17,13 +17,6 @@ class Level {
         this.levelSounds = levelSounds;
         this.coins = coins;
         this.endboss = endboss;
-    }
-
-    playLevelSound() {
-        this.levelSounds[0].play();
-       setInterval(() => {
-       this.levelSounds[0].play();
-       }, 25000);
     }
     
 }

@@ -18,13 +18,15 @@ class MovableObject extends DrawableObject {
     isAboveGround() {
         if (this instanceof ThrowableObject) { //wenn die Funcktion von throwable object ausgefüghrt wird => true und somit wird y die ganze zeit verringert
             return true;
+        } if (this instanceof Chicken) {
+            return this.y < 385;
         } else {
             return this.y < 190;
         }
     }
 
-    jump() {
-        this.speedY += 35;
+    jump(speed) {
+        this.speedY += speed;
     }
 
     isDead() {

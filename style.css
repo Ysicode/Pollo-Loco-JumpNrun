@@ -191,10 +191,6 @@ canvas {
         transform: skewY(0deg);
     }
 
-    .navbar_container {
-        z-index: 999;
-    }
-
     .start_game_btn {
         height: 55px;
         width: 200px;
@@ -226,10 +222,6 @@ canvas {
 
     .menu_controls {
         transform: skewY(0deg);
-    }
-
-    .navbar_container {
-        z-index: 999;
     }
 
     .start_game_btn {

@@ -18,6 +18,7 @@ function animateStartButton() {
 }
 
 function startGame() {
+    initLevel();
     world = new World(canvas, keyboard);
     hideElement('start_screen');
     hideElement('start_game');
