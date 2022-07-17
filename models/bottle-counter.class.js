@@ -10,6 +10,10 @@ class Bottlecounter extends DrawableObject {
         this.height = 50;
     }
 
+    /**
+     * 
+     * @returns - If there is still a bottle available to throw for the character
+     */
     bottleAvailable() {
         return this.bottleCounter > 0
     }

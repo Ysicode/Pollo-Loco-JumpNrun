@@ -30,10 +30,16 @@ class Chick extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function is used to animate the chicks walking
+     */
     animate() {
         this.walking(); 
      }
  
+     /**
+      * This function is used to animate the chicks walking with 2 intervals
+      */
      walking() {
          this.intervalMovingLeft = setInterval(() => {
              this.moveLeft();
@@ -43,11 +49,17 @@ class Chick extends MovableObject {
          }, 400);
      }
  
+     /**
+      * This function is used to anmimate if a chick is dead
+      */
      deadAnimation() {
          this.playAnimation(this.IMAGES_DEAD);
          this.y += 25;
      }
  
+     /**
+      * This function is used to remove the chicks after the character jumps on it
+      */
      removeChicken() {
          this.y = 270;
          setInterval(() => {

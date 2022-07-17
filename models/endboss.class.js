@@ -69,6 +69,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function is used to animate the endboss of the game
+     */
     animate() {
         this.walk();
         this.moveEndbossLeft();
@@ -76,6 +79,9 @@ class Endboss extends MovableObject {
         this.checkIsDead();
     }
 
+    /**
+     * This function is used to animate the endboss with an interval if he is hurt
+     */
     checkIsHurt() {
         setInterval(() => {
             if (this.isHurt()) {
@@ -84,6 +90,9 @@ class Endboss extends MovableObject {
         }, 50);
     }
 
+    /**
+     * This function is used to move the endboss left until the left side of the endboss area
+     */
     moveEndbossLeft() {
         let moveleft = setInterval(() => {
             this.moveLeft();
@@ -94,6 +103,9 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * This function is used to move the endboss right until the right side of the endboss area
+     */
     moveEndbossRight() {
         let moveright = setInterval(() => {
             this.moveRight();
@@ -104,6 +116,10 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * This function is used to anmiate the endboss walking 
+     * if the animation ends, animation attack is called
+     */
     walk() {
         this.y = 160;
         this.speed = 5;
@@ -117,6 +133,10 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+    /**
+     * This function is used to anmiate the endboss attacking 
+     * If the animation ends, animation walking is called
+     */
     attack() {
         this.speed = 0;
         this.y = 0;
@@ -131,21 +151,42 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+    /**
+     * This function is used to check if an animation is ended
+     * 
+     * @param {Array} images - This parameter are the images of the animation
+     * @param {number} i - This parameter is the position of the image at the array
+     * @returns 
+     */
     animationEnd(images, i) {
         return i == images.length - 1
     }
 
+    /**
+     * This function is used to clear an interval
+     * @param {string} interval - This parameter is an interval
+     */
     intervalEnd(interval) {
         clearInterval(interval);
         this.currentImage = 0;
     }
 
+    /**
+     * This function is used to animate the endboss
+     * 
+     * @param {array} images - This parameter are the images of the animation
+     * @param {number} i - This parameter is the position of the image at the array
+     */
     endbossAnimation(images, i) {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
 
+    /**
+     * This function is used to check if the endboss is dead
+     * If yes the game will be restartet
+     */
     checkIsDead() {
         this.intervalDead = setInterval(() => {
             if (this.isDead()) {
@@ -159,6 +200,9 @@ class Endboss extends MovableObject {
         }, 50);
     }
 
+    /**
+     * This function is used to animate the end of an level when the endboss is dead
+     */
     levelEndAnimation() {
         this.world.character.winnerAnimation();
         this.world.levelEndMusic.volume = 0.3;
@@ -168,6 +212,9 @@ class Endboss extends MovableObject {
         });
     }
 
+    /**
+     * This function is used to restart the game by loading th window new
+     */
     restartGame() {
         setTimeout(() => {
             clearInterval(this.intervalDead);

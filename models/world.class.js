@@ -28,11 +28,20 @@ class World {
         this.playLevelSound();
     }
 
+    /**
+     * This function is used to play sounds on different volumes
+     * 
+     * @param {object} sound - This parameter is the sound to play
+     * @param {number} volume - This paramter is the volume of the sound
+     */
     playSound(sound, volume) {
         sound.play();
         sound.volume = volume;
     }
 
+    /**
+     * This function is used replay the levelsound
+     */
     playLevelSound() {
         this.playSound(this.levelMusic, 0.2);
         this.levelSoundInterval = setInterval(() => {
@@ -40,11 +49,17 @@ class World {
         }, 20000);
     }
 
+    /**
+     * This function is used to set the variable world to endboss and character
+     */
     setWorld() {
         this.character.world = this;
         this.endboss.world = this;
     }
 
+    /**
+     * This function is used to check different functions with 2 intervals
+     */
     run() {
         setInterval(() => {
             this.checkThrowObjects();
@@ -56,6 +71,9 @@ class World {
         }, 1000 / 60);
     }
 
+    /**
+     * This function is used to check if the endboss area is hidden by the character
+     */
     checkEndbossFightStarts() {
         if (this.character.startFightingEndboss()) {
             this.level.levelStartX = 6200;
@@ -69,6 +87,9 @@ class World {
         }
     }
 
+    /**
+     * This function is used to check if a bottle to throw is available
+     */
     checkThrowObjects() {
         if (this.keyboard.D) {
             if (this.bottleCounter.bottleAvailable()) {
@@ -78,6 +99,10 @@ class World {
         }
     }
 
+    /**
+     * This function is used to check the throw direction of the bottle
+     * The Throw direction is same as the moving direction of the character
+     */
     checkThrowDirection() {
         if (this.character.otherDirection) {
             this.throwDirection('throwLeft');
@@ -86,17 +111,28 @@ class World {
         }
     }
 
+    /**
+     * This function is used to create a new object and pushes it to an array
+     * 
+     * @param {string} direction - This paramter is the throw direction of the element
+     */
     throwDirection(direction) {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, direction);
         this.throwableObjects.push(bottle);
     }
 
+    /**
+     * This function is used to check collisions of objects with enemies or enboss
+     */
     checkCollisionsWithEnemies() {
         this.characterWithEnemy();
         this.characterWithEndboss();
         this.throwableObjectWithEndboss();
     }
 
+    /**
+     * This function is used to check collisons of character with enemy
+     */
     characterWithEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && enemy.alive && !this.character.jumpsOnTop(enemy)) {
@@ -106,6 +142,9 @@ class World {
         });
     }
 
+    /**
+     * This function is used to check collisons of character with endboss
+     */
     characterWithEndboss() {
         if (this.character.isColliding(this.endboss)) {
             this.character.reduceEnergy(this.character);
@@ -113,6 +152,9 @@ class World {
         }
     }
 
+    /**
+     * This function is used to check collisons of throwable objects with endboss
+     */
     throwableObjectWithEndboss() {
         this.throwableObjects.forEach((object) => {
             if (this.endboss.isColliding(object)) {
@@ -122,12 +164,18 @@ class World {
         });
     }
 
+    /**
+     * This function is used to check if an object jumps on top of another
+     */
     checkCollectOrJumpOnObjects() {
         this.characterWithCoin();
         this.characterJumpsOnTopChicken();
         this.characterWithBottles();
     }
 
+    /**
+     * This function is used to check if the character jumps on top of a chicken
+     */
     characterJumpsOnTopChicken() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.jumpsOnTop(enemy) && this.character.speedY < 0) {
@@ -139,6 +187,9 @@ class World {
         })
     }
 
+    /**
+     * This function is used to check if the character is colliding with a coin
+     */
     characterWithCoin() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -150,6 +201,9 @@ class World {
         });
     }
 
+    /**
+     * This function is used to check if the character is colliding with a bottle
+     */
     characterWithBottles() {
         this.level.bottles.forEach((bottles) => {
             if (this.character.isColliding(bottles)) {
@@ -161,6 +215,9 @@ class World {
         });
     }
 
+    /**
+     * This function is used to draw the level with all objects
+     */
     draw() {
         this.clearCanvas();
         this.drawLevel();
@@ -169,18 +226,26 @@ class World {
         this.drawAnimation();
     }
 
+    /**
+     * This function is used to call the draw function always
+     */
     drawAnimation() {
-        //Draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
     }
 
+    /**
+     * This function is used to delete all objects from the canvas
+     */
     clearCanvas() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //löscht alle Elemente
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
+    /**
+     * This function is used to draw all objects of the level
+     */
     drawLevel() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgrounds);
@@ -193,6 +258,9 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+     * This function is used to draw all fixed objects of the game
+     */
     drawFixedObjects() {
         this.addToMap(this.statusbar);
         this.drawNumber();
@@ -201,18 +269,31 @@ class World {
         this.addToMap(this.coinCounter);
     }
 
+    /**
+     * This function is used to draw the character and adding the camera window
+     */
     drawCharacter() {
         this.ctx.translate(this.camera_x, 0); //Forwards
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+     * This function calls the addToMap function for all objects of the array
+     * 
+     * @param {object} objects - This paramter is a object
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * This function is used to draw the object to the game 
+     * 
+     * @param {object} mo 
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -224,6 +305,11 @@ class World {
         }
     }
 
+    /**
+     * This function is used to flip the image when its walking in another direction
+     * 
+     * @param {object} mo - This paramter is an object
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -231,11 +317,20 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * This function is used to flip the image back when it was flipped before
+     * 
+     * @param {object} mo - This paramter is an object
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+    /**
+     * This function is used to draw numbers to the game 
+     * Number for bottles and coins
+     */
     drawNumber() {
         this.ctx.font = '30px sans-serif';
         this.ctx.fillStyle = "black";
@@ -243,6 +338,10 @@ class World {
         this.ctx.fillText(this.coinCounter.coinCounter, 660, 50);
     }
 
+    /**
+     * This function is used to show the energy of the endboss with a number 
+     * when area endboss is hidden
+     */
     showEndbossEnergy() {
         if (this.character.startFightingEndboss()) {
             this.ctx.font = '600 55px sans-serif';

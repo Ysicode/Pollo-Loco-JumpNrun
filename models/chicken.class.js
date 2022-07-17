@@ -34,11 +34,18 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function is used to start 3 intervals which animate the chickens 
+     */
     animate() {
        this.walking();
        this.jumping();
     }
 
+    /**
+     * This function is used to let the chickens move left and animate with different images
+     * 2 different intervals are used
+     */
     walking() {
         this.intervalMovingLeft = setInterval(() => {
             this.moveLeft();
@@ -48,23 +55,34 @@ class Chicken extends MovableObject {
         }, 400);
     }
 
+    /**
+     * This function is used to let the chickens jump with time interval
+     */
     jumping() {
         setInterval(() => {
             this.jump(20);
         }, 2000 + Math.random() * 2000);
     }
 
-    deadAnimation() {
-        this.playAnimation(this.IMAGES_DEAD);
-        this.y += 25;
-    }
-
+    /**
+     * This function is used to remove a chicken if the character jumped on it
+     * The intervals to animate the chickens walking get cleared
+     */
     removeChicken() {
         this.y = 270;
         setInterval(() => {
            this.deadAnimation();
         }, 50);
-        clearInterval(this.walking);
-        clearInterval(this.movingLeft);
+        clearInterval(this.intervalMovingLeft);
+        clearInterval(this.intervalWalking);
+    }
+
+     /**
+     * This function is used to animate a dead chicken
+     * By adding y +25 with an interval the chicken will be moved downward out of the game
+     */
+      deadAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.y += 25;
     }
 }

@@ -102,6 +102,9 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function is used to animate the character
+     */
     animate() {
         setInterval(() => {
             this.characterMove();
@@ -114,6 +117,9 @@ class Character extends MovableObject {
         }, 50);
     }
 
+    /**
+     * This fucntion is used to animate the character walking and jumping
+     */
     characterMove() {
         this.walking_sound.pause();
         this.walkRight();
@@ -122,6 +128,9 @@ class Character extends MovableObject {
         this.world.camera_x = -this.x + 200;
     }
 
+    /**
+     * This function is used to animate the character walking right
+     */
     walkRight() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
             this.moveRight();
@@ -130,6 +139,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to animate the character walking left
+     */
     walkLeft() {
         if (this.world.keyboard.LEFT && this.x > this.world.level.levelStartX) {
             this.moveLeft();
@@ -138,6 +150,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to animate the character jumping
+     */
     jumping() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump(35);
@@ -145,6 +160,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to animate the character jumping on a chicken
+     */
     jumpingOnChicken() {
         this.y = 80;
         this.speedY = 10;
@@ -152,6 +170,11 @@ class Character extends MovableObject {
         this.isPlaying = false;
     }
 
+    /**
+     * This function is used to animate a dead character and stop the animation interval
+     * 
+     * @param {string} interval - This parameter is the interval to animate the character
+     */
     characterDead(interval) {
         if (this.isDead()) {
             this.y = 0;
@@ -162,6 +185,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to start the dead animation of the character
+     */
     deadAnimation() {
         setInterval(() => {
             this.y += 10;
@@ -173,6 +199,9 @@ class Character extends MovableObject {
         }, 50)
     }
 
+    /**
+     * This function is used to animate animation of the character if the endboss is dead
+     */
     winnerAnimation() {
         this.playAnimation(this.IMAGES_WINNER);
         if (this.y > -70) {
@@ -183,6 +212,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to animate the character when he is hurt
+     */
     characterHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
@@ -190,18 +222,29 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function is used to animate the walking of the character
+     */
     characterWalking() {
         if (this.walking()) {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+     * This function is used to animate the jumping of the character
+     */
     characterJump() {
         if (this.world.keyboard.SPACE) {
             this.playAnimation(this.IMAGES_JUMPING);
         }
     }
 
+    /**
+     * This function is used to return a value
+     * 
+     * @returns - if key right or left is down and the character is on the ground
+     */
     walking() {
         return this.world.keyboard.RIGHT && this.y > 185 ||
             this.world.keyboard.LEFT && this.y > 185

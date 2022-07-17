@@ -7,11 +7,21 @@ class DrawableObject {
     imageCache = [];
     currentImage = 0;
 
+    /**
+     * This function is used to create a new Image object 
+     * 
+     * @param {string} path - This paramter is the path of an image
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+    /**
+     * This function is used to draw images to the canvas 
+     * 
+     * @param {object} ctx - This paramter is the canvas in 2d context 
+     */
     draw(ctx) {
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -22,6 +32,11 @@ class DrawableObject {
         }
     }
 
+    /**
+     * This function is used to load all images of an array in another array
+     * 
+     * @param {array} arr - This paramter is an array of images
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image()

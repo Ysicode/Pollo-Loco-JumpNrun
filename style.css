@@ -25,30 +25,27 @@ body {
     flex-direction: column;
 }
 
-.game_container {
+.d_flex_space {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+.game_container {
     width: 720px;
     height: 480px;
     box-shadow: 0px 0px 20px 0px black;
 }
 
 .navbar_container {
-    display: flex;
-    position: absolute;
+    position: absolute;  
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
     width: 720px;
     height: 480px;
     z-index: 118;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 90%;
     margin-top: 30px;
 }
@@ -193,17 +190,11 @@ canvas {
 
 .area_controls_button {
     height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .area_controls_button_right {
     height: 100%;
     width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .control_bottons_bg {
@@ -239,9 +230,6 @@ canvas {
 }
 
 .open_controls_btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 20%;
     height: 6%;
     border-radius: 25px 25px 0px 0px;

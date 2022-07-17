@@ -28,6 +28,9 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
+    /**
+     * This function is used to throw a bottle by the character
+     */
     throw() {
         this.speedY = 20;
         this.applyGravity();
@@ -41,12 +44,20 @@ class ThrowableObject extends MovableObject {
         }, 50);
     }
 
+    /**
+     * This function is used to check if the character is moving right
+     * Throw direction is same as walking direction
+     */
     checkThrowRight() {
         if (this.throwDirection == 'throwRight') {
             this.x += 10;
         }
     }
 
+     /**
+     * This function is used to check if the character is moving left
+     * Throw direction is same as walking direction
+     */
     checkThrowLeft() {
         if (this.throwDirection == 'throwLeft') {
             this.x -= 10;
