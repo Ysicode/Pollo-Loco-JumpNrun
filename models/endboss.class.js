@@ -148,7 +148,7 @@ class Endboss extends MovableObject {
 
     checkIsDead() {
         this.intervalDead = setInterval(() => {
-            if (this.isDead() && !this.world.character.isDead()) {
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.y += 15;
                 clearInterval(this.intervalAttack);

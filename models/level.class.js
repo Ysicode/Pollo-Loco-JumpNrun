@@ -6,7 +6,7 @@ class Level {
     coins;
     levelSounds;
     levelEndX = 720 * 10;
-    levelStartX = 100
+    levelStartX = 300;
     endboss;
 
     constructor(levelSounds, enemies, endboss, clouds, backgrounds, bottles, coins) {

@@ -155,23 +155,14 @@ function initLevel() {
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6400, 100),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6500, 150),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6600, 200),
-    
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7100, 150),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7100, 200),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7100, 250),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7100, 300),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7050, 150),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7050, 200),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7050, 250),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7050, 300),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7000, 150),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7000, 200),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7000, 250),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 7000, 300),
             new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6950, 150),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6950, 200),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6950, 250),
-            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6950, 300)
+            new Bottles('img/7_statusbars/3_icons/icon_salsa_bottle.png', 6950, 250)
         ],
         [
             new Coin(300, 300),

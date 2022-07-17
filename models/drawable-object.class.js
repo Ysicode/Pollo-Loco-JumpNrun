@@ -1,5 +1,5 @@
 class DrawableObject {
-    x = 100;
+    x = 200;
     y = 300;
     height = 150;
     width = 100;

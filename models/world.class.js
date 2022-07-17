@@ -58,7 +58,7 @@ class World {
 
     checkEndbossFightStarts() {
         if (this.character.startFightingEndboss()) {
-            this.level.levelStartX = 6000;
+            this.level.levelStartX = 6200;
             this.showEndbossEnergy();
             this.levelMusic.pause();
             clearInterval(this.levelSoundInterval);

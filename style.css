@@ -5,7 +5,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    backdrop-filter: blur(3px);
     font-family: 'Archivo Black', sans-serif;
 }
 
@@ -164,10 +163,108 @@ canvas {
 
 .start_game_btn_bigger {
     transform: scale(1.05);
+    background: #fbd350;
 }
 
 .start_game_btn:hover, .start_game_btn_bigger:hover {
     background: #fbd350;
+}
+
+.game_controls_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    z-index: 99;
+}
+
+.area_controls_buttons_left {
+    width: 20%;
+    height: 50%;
+}
+
+.area_controls_buttons_right {
+    width: 36%;
+    height: 25%;
+}
+
+.area_controls_button {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.area_controls_button_right {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control_bottons_bg {
+    background: #ffc4089c;
+    border-radius: 50px;
+    width: 75px;
+    height: 75px;
+}
+
+.controls_button_throw {
+    transform: rotate(292deg);
+}
+
+.controls_button_jump {
+    width: 37px;
+    height: 37px;
+}
+
+.controls_button_left {
+    width: 35px;
+    height: 35px;
+    transform: rotate(270deg);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.controls_button_right {
+    width: 35px;
+    height: 35px;
+    transform: rotate(90deg);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.open_controls_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    height: 6%;
+    border-radius: 25px 25px 0px 0px;
+    background: #ffc4089c;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.open_controls_btn_left {
+    transform: rotate(270deg);
+    width: 20px;
+    height: 20px;
+}
+
+.open_controls_btn_text {
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.open_controls_btn_right {
+    transform: rotate(90deg);
+    width: 20px;
+    height: 20px;
 }
 
 .end_screen {

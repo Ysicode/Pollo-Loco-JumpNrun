@@ -119,7 +119,7 @@ class Character extends MovableObject {
         this.walkRight();
         this.walkLeft();
         this.jumping();
-        this.world.camera_x = -this.x + 100;
+        this.world.camera_x = -this.x + 200;
     }
 
     walkRight() {

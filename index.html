@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="style.css">
 
     <script src="models/drawable-object.class.js"></script>
@@ -48,7 +48,7 @@
             src="img/9_intro_outro_screens/game_over/game over.png" alt="">
         <div id="navbar_container" class="navbar_container">
             <div class="navbar">
-                <button onclick="toggleControls()" id="controls" class="controls_button">Controls</button>
+                <button onclick="toggleControlDescription()" id="controls" class="controls_button">Controls</button>
                 <div onclick="fullscreen()" id="fullscreen" class="fullscreen d_flex">
                     <img class="icon_fullscreen" src="icons/fullscreen.png" alt="">
                 </div>
@@ -84,12 +84,46 @@
                             <img class="menu_icon_right menu_icon_size" src="icons/arrow.png" alt="">
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
+
+        <div id="game_controls" class="game_controls_container d_none">
+            <div id="left_buttons" class="area_controls_buttons_left d_none">
+                <div id="throw_button" class="area_controls_button">
+                    <div class="control_bottons_bg d_flex">
+                        <img class="controls_button_throw" src="icons/throw.png" alt="">
+                    </div>
+                </div>
+                <div id="jump_button" class="area_controls_button">
+                    <div class="control_bottons_bg d_flex">
+                        <img class="controls_button_jump" src="icons/arrow.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div onclick="toggleControls()" id="open_controls_btn" class="open_controls_btn">
+                <img class="open_controls_btn_left" src="icons/arrow.png" alt="">
+                <p id="open_close_btn" class="open_controls_btn_text">show</p>
+                <img class="open_controls_btn_right" src="icons/arrow.png" alt="">
+            </div>
+            <div id="right_buttons" class="area_controls_buttons_right d_flex d_none">
+                <div id="left_button" class="area_controls_button_right">
+                    <div class="control_bottons_bg d_flex">
+                        <img class="controls_button_left" src="icons/arrow.png" alt="">
+                    </div>
+                </div>
+                <div id="right_button" class="area_controls_button_right">
+                    <div class="control_bottons_bg d_flex">
+                        <img class="controls_button_right" src="icons/arrow.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
 
 
 </body>
