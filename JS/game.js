@@ -27,36 +27,6 @@ function startGame() {
     addMobileButtonsEventListeners();
 }
 
-window.addEventListener('keydown', (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    if (e.keyCode == 68) {
-        keyboard.D = true;
-    }
-})
-
-window.addEventListener('keyup', (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-    if (e.keyCode == 68) {
-        keyboard.D = false;
-    }
-}) 
-
 function fullscreen() {
     let content = document.getElementById('game_container');
     if (!document.fullscreenElement) {
@@ -100,6 +70,35 @@ function hideElement(id) {
     return document.getElementById(`${id}`).classList.add('d_none');
 }
 
+window.addEventListener('keydown', (e) => {
+    if (e.keyCode == 39) {
+        keyboard.RIGHT = true;
+    }
+    if (e.keyCode == 37) {
+        keyboard.LEFT = true;
+    }
+    if (e.keyCode == 32) {
+        keyboard.SPACE = true;
+    }
+    if (e.keyCode == 68) {
+        keyboard.D = true;
+    }
+})
+
+window.addEventListener('keyup', (e) => {
+    if (e.keyCode == 39) {
+        keyboard.RIGHT = false;
+    }
+    if (e.keyCode == 37) {
+        keyboard.LEFT = false;
+    }
+    if (e.keyCode == 32) {
+        keyboard.SPACE = false;
+    }
+    if (e.keyCode == 68) {
+        keyboard.D = false;
+    }
+}) 
 
 function addMobileButtonsEventListeners() {
     document.getElementById('left_button').addEventListener('touchstart', (e) => {

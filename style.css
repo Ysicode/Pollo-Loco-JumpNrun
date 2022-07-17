@@ -37,8 +37,9 @@ body {
 .navbar_container {
     display: flex;
     position: absolute;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     width: 720px;
     height: 480px;
     z-index: 118;
@@ -280,12 +281,13 @@ canvas {
 
 
 @media only screen and (max-width: 720px) {
-    canvas, .game_container, .start_screen, .navbar_container, .menu_controls {
+    canvas, .game_container, .start_screen, .navbar_container, .game_controls_container {
         width: 100%;
     }
 
     .menu_controls {
         transform: skewY(0deg);
+        height: 50vh;
     }
 
     .start_game_btn {
@@ -310,15 +312,27 @@ canvas {
         width: 20px;
         height: 20px;
     }
+
+    .open_controls_btn_text {
+        font-size: 13px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .open_controls_btn_right, .open_controls_btn_left {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 @media only screen and (max-height: 480px) {
-    canvas, .game_container, .start_screen, .navbar_container, .menu_controls {
+    canvas, .game_container, .start_screen, .navbar_container, .game_controls_container {
         height: 100vh;
     }
 
     .menu_controls {
         transform: skewY(0deg);
+        height: 50vh;
     }
 
     .start_game_btn {
@@ -342,5 +356,16 @@ canvas {
     .icon_fullscreen {
         width: 20px;
         height: 20px;
+    }
+
+    .open_controls_btn_text {
+        font-size: 13px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .open_controls_btn_right, .open_controls_btn_left {
+        width: 15px;
+        height: 15px;
     }
 }
